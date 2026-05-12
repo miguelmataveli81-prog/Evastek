@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evastek — Empresa Júnior de Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #1c1f26;
+      --light: #f8f9fa;
+      --blue: #0d2b4e;
+      --blue-mid: #0e3d6e;
+      --accent: #1a5fa8;
+      --accent-light: #4a9edd;
+      --muted: #8a9ab0;
+      --border: rgba(248,249,250,0.08);
+      --card-bg: rgba(255,255,255,0.03);
+      --l1: #4a9edd;
+      --l2: #2ecc8f;
+      --l3: #f0a500;
+      --l4: #a78bfa;
+      --l1-bg: rgba(74,158,221,0.08);
+      --l2-bg: rgba(46,204,143,0.08);
+      --l3-bg: rgba(240,165,0,0.08);
+      --l4-bg: rgba(167,139,250,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--dark);
+      color: var(--light);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* Custom cursor */
+    .cursor { width: 10px; height: 10px; background: var(--accent-light); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease; }
+    .cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(74,158,221,0.4); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: transform 0.18s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease; }
+    .cursor.hover { width: 6px; height: 6px; background: #fff; }
+    .cursor-ring.hover { width: 52px; height: 52px; border-color: rgba(74,158,221,0.8); }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 24px 60px; background: linear-gradient(to bottom, rgba(28,31,38,0.95) 0%, transparent 100%); backdrop-filter: blur(8px); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; color: var(--light); text-decoration: none; }
+    .nav-logo span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s ease; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--accent-light); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+    .nav-links a:hover { color: var(--light); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--light); text-decoration: none; border: 1px solid rgba(248,249,250,0.2); padding: 10px 22px; border-radius: 2px; transition: background 0.3s ease, border-color 0.3s ease; }
+    .nav-cta:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.4); }
+
+    /* Hero */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 140px 60px 80px; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 70% 40%, rgba(13,43,78,0.6) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 20% 80%, rgba(26,95,168,0.15) 0%, transparent 60%); }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%); }
+    .hero-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-light); font-weight: 500; margin-bottom: 28px; position: relative; display: flex; align-items: center; gap: 12px; }
+    .hero-label::before { content: ''; width: 32px; height: 1px; background: var(--accent-light); display: block; }
+    .hero-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.95; letter-spacing: -0.03em; max-width: 800px; position: relative; margin-bottom: 32px; }
+    .hero-title .line { display: block; overflow: hidden; }
+    .hero-title .line span { display: block; animation: slideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .hero-title .line:nth-child(2) span { animation-delay: 0.1s; white-space: nowrap; display: flex; align-items: baseline; gap: 0.25em; }
+    .hero-title .line:nth-child(3) span { animation-delay: 0.2s; }
+    .hero-title .accent { color: var(--accent-light); display: inline-block; min-width: 0; white-space: nowrap; }
+    @keyframes slideUp { from { transform: translateY(110%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .hero-desc { font-size: 1.05rem; color: var(--muted); max-width: 480px; line-height: 1.7; position: relative; margin-bottom: 52px; animation: fadeIn 1s 0.5s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-actions { display: flex; align-items: center; gap: 24px; position: relative; animation: fadeIn 1s 0.65s ease both; }
+    .btn-primary { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dark); background: var(--light); text-decoration: none; padding: 16px 36px; border-radius: 2px; transition: background 0.3s ease, transform 0.3s ease; display: inline-block; }
+    .btn-primary:hover { background: #c8d6e8; transform: translateY(-2px); }
+    .btn-ghost { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.3s ease; }
+    .btn-ghost:hover { color: var(--light); }
+    .btn-ghost svg { transition: transform 0.3s ease; }
+    .btn-ghost:hover svg { transform: translateX(4px); }
+    .hero-stats { position: absolute; right: 60px; bottom: 100px; display: flex; gap: 60px; animation: fadeIn 1s 0.8s ease both; }
+    .stat { text-align: right; }
+    .stat-number { font-family: 'Syne', sans-serif; font-size: 2.6rem; font-weight: 800; letter-spacing: -0.04em; color: var(--light); line-height: 1; }
+    .stat-number span { color: var(--accent-light); }
+    .stat-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    /* Marquee */
+    .marquee-wrapper { padding: 28px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; width: max-content; }
+    .marquee-item { display: flex; align-items: center; gap: 24px; padding: 0 32px; white-space: nowrap; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+    .marquee-dot { width: 4px; height: 4px; background: var(--accent-light); border-radius: 50%; flex-shrink: 0; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* Section base */
+    section { padding: 120px 60px; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-light); font-weight: 500; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .section-label::before { content: ''; width: 22px; height: 1px; background: var(--accent-light); display: block; }
+    .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 20px; }
+
+    /* About */
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+    .about-text p { color: var(--muted); line-height: 1.8; font-size: 0.98rem; margin-bottom: 16px; }
+    .about-text p strong { color: var(--light); font-weight: 500; }
+    .about-visual { position: relative; height: 420px; }
+    .about-card { position: absolute; background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 28px; backdrop-filter: blur(10px); }
+    .about-card.main { inset: 0; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(135deg, rgba(13,43,78,0.5) 0%, rgba(28,31,38,0.8) 100%); border-color: rgba(26,95,168,0.3); }
+    .about-card.main .big-text { font-family: 'Syne', sans-serif; font-size: 5rem; font-weight: 800; color: var(--accent-light); opacity: 0.15; line-height: 1; margin-bottom: 12px; }
+    .about-card.main .card-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+    .about-card.main .card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .about-card.float { top: 20px; right: -20px; width: 160px; text-align: center; background: rgba(26,95,168,0.12); border-color: rgba(26,95,168,0.3); }
+    .about-card.float .num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--accent-light); }
+    .about-card.float .lbl { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    /* Services */
+    .services-section { background: rgba(255,255,255,0.01); }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .service-card { background: var(--dark); padding: 48px 40px; position: relative; overflow: hidden; transition: background 0.4s ease; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+    .service-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(74,158,221,0.06), transparent); transform: skewX(-20deg); transition: left 0.6s ease; }
+    .service-card:hover::after { left: 160%; }
+    .service-card:hover { background: rgba(13,43,78,0.3); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-num { font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; color: var(--accent-light); margin-bottom: 32px; opacity: 0.7; }
+    .service-icon { width: 44px; height: 44px; margin-bottom: 24px; color: var(--accent-light); }
+    .service-name { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.01em; }
+    .service-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 24px; }
+    .tag { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border); padding: 4px 10px; border-radius: 2px; }
+
+    /* Process */
+    .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 64px; position: relative; }
+    .process-steps::before { content: ''; position: absolute; top: 28px; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--border) 10%, var(--border) 90%, transparent); }
+    .process-step { position: relative; padding-top: 60px; }
+    .step-dot { position: absolute; top: 20px; left: 0; width: 16px; height: 16px; border: 1px solid var(--accent); border-radius: 50%; background: var(--dark); display: flex; align-items: center; justify-content: center; }
+    .step-dot::after { content: ''; width: 6px; height: 6px; background: var(--accent-light); border-radius: 50%; }
+    .step-num { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-light); font-weight: 600; margin-bottom: 12px; }
+    .step-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .step-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+    /* Testimonials */
+    .testimonials-section { background: linear-gradient(180deg, transparent 0%, rgba(13,43,78,0.12) 50%, transparent 100%); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 64px; }
+    .testimonial-card { background: var(--card-bg); border: 1px solid var(--border); padding: 36px; border-radius: 4px; transition: border-color 0.3s ease, transform 0.3s ease; display: flex; flex-direction: column; }
+    .testimonial-card:hover { border-color: rgba(26,95,168,0.4); transform: translateY(-4px); }
+    .quote-mark { font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800; color: var(--accent); opacity: 0.3; line-height: 1; margin-bottom: 16px; }
+    .testimonial-text { font-size: 0.92rem; color: var(--muted); line-height: 1.75; margin-bottom: 28px; font-style: italic; flex: 1; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--blue-mid), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--light); flex-shrink: 0; }
+    .author-name { font-weight: 500; font-size: 0.88rem; }
+
+    /* CTA */
+    .cta-section { text-align: center; position: relative; overflow: hidden; }
+    .cta-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(13,43,78,0.6) 0%, transparent 70%); }
+    .cta-section .section-label { justify-content: center; }
+    .cta-section .section-label::before { display: none; }
+    .cta-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.5rem, 5vw, 5rem); letter-spacing: -0.04em; line-height: 1; margin-bottom: 20px; position: relative; }
+    .cta-desc { font-size: 1rem; color: var(--muted); max-width: 500px; margin: 0 auto 48px; line-height: 1.7; position: relative; }
+    .cta-actions { display: flex; justify-content: center; gap: 16px; position: relative; }
+    .btn-outline { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--light); text-decoration: none; padding: 16px 32px; border: 1px solid rgba(248,249,250,0.2); border-radius: 2px; transition: border-color 0.3s ease, background 0.3s ease; }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.04); }
+
+    /* Footer */
+    footer { padding: 64px 60px 40px; border-top: 1px solid var(--border); }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+    .footer-brand .nav-logo { display: block; margin-bottom: 16px; font-size: 1.6rem; }
+    .footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; max-width: 260px; }
+    .footer-col-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--light); font-weight: 600; margin-bottom: 20px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.3s ease; }
+    .footer-links a:hover { color: var(--light); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; border-top: 1px solid var(--border); }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); }
+    .footer-socials { display: flex; gap: 20px; }
+    .footer-socials a { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 2px; display: flex; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; font-size: 0.75rem; font-weight: 600; transition: color 0.3s ease, border-color 0.3s ease; }
+    .footer-socials a:hover { color: var(--light); border-color: rgba(255,255,255,0.3); }
+
+    .reveal { opacity: 1; transform: none; }
+
+    /* ===========================
+       QUIZ SECTION
+    =========================== */
+    .quiz-section {
+      background: linear-gradient(180deg, transparent 0%, rgba(13,43,78,0.15) 50%, transparent 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .quiz-section-bg {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 10%, transparent 70%);
+    }
+    .quiz-wrap { max-width: 780px; margin: 0 auto; position: relative; }
+    .quiz-header { text-align: center; margin-bottom: 56px; }
+    .quiz-header .section-label { justify-content: center; }
+    .quiz-header .section-label::before { display: none; }
+    .quiz-header .section-label::after { content: ''; width: 22px; height: 1px; background: var(--accent-light); display: block; }
+
+    /* Progress bar */
+    .quiz-progress-wrap { margin-bottom: 48px; }
+    .quiz-progress-bar { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .quiz-progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light)); border-radius: 2px; transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1); width: 0%; }
+    .quiz-progress-info { display: flex; justify-content: space-between; margin-bottom: 12px; }
+    .quiz-progress-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+    .quiz-progress-count { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-light); font-weight: 600; }
+
+    /* Question card */
+    .quiz-card {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 52px;
+      background: rgba(255,255,255,0.02);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease;
+    }
+    .quiz-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+    .quiz-q-num { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-light); font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .quiz-q-num::before { content: ''; width: 14px; height: 1px; background: var(--accent-light); }
+    .quiz-question { font-family: 'Syne', sans-serif; font-size: clamp(1.2rem, 2.5vw, 1.65rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 36px; }
+    .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+    .quiz-option {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 18px 22px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-align: left;
+      width: 100%;
+    }
+    .quiz-option:hover { border-color: rgba(74,158,221,0.35); background: rgba(74,158,221,0.04); color: var(--light); }
+    .quiz-option.selected { border-color: var(--accent-light); background: rgba(74,158,221,0.08); color: var(--light); }
+    .quiz-option.selected .opt-dot { background: var(--accent-light); border-color: var(--accent-light); }
+    .quiz-option.selected .opt-dot::after { opacity: 1; }
+    .opt-dot { width: 18px; height: 18px; border: 1px solid var(--border); border-radius: 50%; flex-shrink: 0; margin-top: 1px; transition: all 0.25s ease; position: relative; display: flex; align-items: center; justify-content: center; }
+    .opt-dot::after { content: ''; width: 8px; height: 8px; background: var(--dark); border-radius: 50%; opacity: 0; transition: opacity 0.25s ease; }
+    .opt-label { font-weight: 300; line-height: 1.5; }
+
+    .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; }
+    .quiz-btn { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border: none; cursor: pointer; padding: 14px 32px; border-radius: 2px; transition: all 0.3s ease; }
+    .quiz-btn-back { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .quiz-btn-back:hover { color: var(--light); border-color: rgba(255,255,255,0.3); }
+    .quiz-btn-next { background: var(--light); color: var(--dark); }
+    .quiz-btn-next:hover { background: #c8d6e8; transform: translateY(-1px); }
+    .quiz-btn-next:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+    /* Animation slide */
+    .quiz-card.slide-out-left { animation: slideOutLeft 0.3s ease forwards; }
+    .quiz-card.slide-in-right { animation: slideInRight 0.35s cubic-bezier(0.16,1,0.3,1) forwards; }
+    .quiz-card.slide-out-right { animation: slideOutRight 0.3s ease forwards; }
+    .quiz-card.slide-in-left { animation: slideInLeft 0.35s cubic-bezier(0.16,1,0.3,1) forwards; }
+    @keyframes slideOutLeft { to { opacity: 0; transform: translateX(-32px); } }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(48px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideOutRight { to { opacity: 0; transform: translateX(32px); } }
+    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-48px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* ===== RESULT ===== */
+    .quiz-result { display: none; }
+    .quiz-result.visible { display: block; animation: fadeUp 0.6s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    .result-level-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 20px;
+      border-radius: 2px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      border: 1px solid;
+    }
+    .result-card { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 32px; }
+    .result-card-header { padding: 48px; position: relative; overflow: hidden; }
+    .result-card-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .result-big-num { font-family: 'Syne', sans-serif; font-size: 9rem; font-weight: 800; line-height: 1; opacity: 0.05; position: absolute; right: 40px; bottom: -10px; letter-spacing: -0.05em; }
+    .result-level-tag { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .result-level-tag::before { content: ''; width: 18px; height: 1px; }
+    .result-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+    .result-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.75; max-width: 560px; }
+    .result-traits-wrap { padding: 36px 48px; border-top: 1px solid var(--border); background: rgba(255,255,255,0.015); }
+    .result-traits-title { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 18px; }
+    .result-traits { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .result-trait { display: flex; align-items: flex-start; gap: 10px; font-size: 0.87rem; color: var(--light); line-height: 1.5; }
+    .result-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+
+    .result-services-section { margin-bottom: 32px; }
+    .result-services-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .result-services-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .result-services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .result-service { padding: 22px 20px; border: 1px solid var(--border); border-radius: 3px; position: relative; overflow: hidden; }
+    .result-service.available { background: rgba(255,255,255,0.02); }
+    .result-service.available::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; }
+    .result-service.locked { opacity: 0.35; }
+    .rs-status { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+    .rs-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
+    .result-service.locked .rs-status { color: var(--muted); }
+    .result-service.locked .rs-status::before { background: var(--muted); }
+    .rs-name { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; }
+    .rs-why { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+    .result-note { padding: 24px 28px; border: 1px solid var(--border); border-radius: 3px; display: flex; gap: 18px; align-items: flex-start; background: rgba(255,255,255,0.02); margin-bottom: 32px; }
+    .result-note-icon { width: 32px; height: 32px; border-radius: 50%; border: 1px solid; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+    .result-note-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+    .result-note-text { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+    .result-cta { text-align: center; padding: 52px; border: 1px solid var(--border); border-radius: 4px; background: rgba(13,43,78,0.2); position: relative; overflow: hidden; }
+    .result-cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(26,95,168,0.12) 0%, transparent 70%); }
+    .result-cta h3 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 10px; position: relative; }
+    .result-cta p { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; position: relative; max-width: 420px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+    .result-cta-btns { display: flex; justify-content: center; gap: 14px; position: relative; }
+    .result-restart { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: transparent; border: 1px solid var(--border); padding: 14px 28px; border-radius: 2px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.3s ease; }
+    .result-restart:hover { color: var(--light); border-color: rgba(255,255,255,0.3); }
+
+    /* Level color variants */
+    .lv1 { color: var(--l1); } .lv1-bg { background: var(--l1-bg); border-color: var(--l1); }
+    .lv2 { color: var(--l2); } .lv2-bg { background: var(--l2-bg); border-color: var(--l2); }
+    .lv3 { color: var(--l3); } .lv3-bg { background: var(--l3-bg); border-color: var(--l3); }
+    .lv4 { color: var(--l4); } .lv4-bg { background: var(--l4-bg); border-color: var(--l4); }
+
+    /* Levels page integrated */
+    .levels-section { background: rgba(255,255,255,0.01); }
+    .levels-section .section-label { justify-content: center; }
+    .levels-section .section-label::before { display: none; }
+    .levels-section .section-label::after { content: ''; width: 22px; height: 1px; background: var(--accent-light); }
+    .levels-section-header { text-align: center; margin-bottom: 60px; }
+    .levels-nav { display: flex; justify-content: center; gap: 0; position: relative; margin-bottom: 64px; }
+    .levels-nav::before { content: ''; position: absolute; top: 32px; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent); }
+    .level-btn { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 40px; cursor: pointer; border: none; background: none; font-family: 'DM Sans', sans-serif; transition: transform 0.3s ease; }
+    .level-btn:hover { transform: translateY(-4px); }
+    .level-orb { width: 64px; height: 64px; border-radius: 50%; border: 1.5px solid; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; position: relative; transition: all 0.4s ease; background: var(--dark); }
+    .level-orb::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid; opacity: 0; transition: opacity 0.4s ease; }
+    .level-btn.active .level-orb::after { opacity: 0.3; }
+    .level-btn.active .level-orb { transform: scale(1.15); }
+    .level-btn[data-level="1"] .level-orb { border-color: var(--l1); color: var(--l1); }
+    .level-btn[data-level="1"] .level-orb::after { border-color: var(--l1); }
+    .level-btn[data-level="1"].active .level-orb { background: var(--l1-bg); box-shadow: 0 0 30px rgba(74,158,221,0.2); }
+    .level-btn[data-level="2"] .level-orb { border-color: var(--l2); color: var(--l2); }
+    .level-btn[data-level="2"] .level-orb::after { border-color: var(--l2); }
+    .level-btn[data-level="2"].active .level-orb { background: var(--l2-bg); box-shadow: 0 0 30px rgba(46,204,143,0.2); }
+    .level-btn[data-level="3"] .level-orb { border-color: var(--l3); color: var(--l3); }
+    .level-btn[data-level="3"] .level-orb::after { border-color: var(--l3); }
+    .level-btn[data-level="3"].active .level-orb { background: var(--l3-bg); box-shadow: 0 0 30px rgba(240,165,0,0.2); }
+    .level-btn[data-level="4"] .level-orb { border-color: var(--l4); color: var(--l4); }
+    .level-btn[data-level="4"] .level-orb::after { border-color: var(--l4); }
+    .level-btn[data-level="4"].active .level-orb { background: var(--l4-bg); box-shadow: 0 0 30px rgba(167,139,250,0.2); }
+    .level-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); transition: color 0.3s; }
+    .level-btn.active .level-name { color: var(--light); }
+
+    .detail-panel { display: none; animation: fadeUp 0.5s ease both; }
+    .detail-panel.active { display: block; }
+    .panel-header { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; padding: 48px; border: 1px solid var(--border); border-radius: 4px; position: relative; overflow: hidden; }
+    .panel-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .panel-l1 .panel-header::before { background: var(--l1); }
+    .panel-l2 .panel-header::before { background: var(--l2); }
+    .panel-l3 .panel-header::before { background: var(--l3); }
+    .panel-l4 .panel-header::before { background: var(--l4); }
+    .panel-big-num { font-family: 'Syne', sans-serif; font-size: 8rem; font-weight: 800; line-height: 1; opacity: 0.05; position: absolute; right: 40px; bottom: -10px; letter-spacing: -0.05em; }
+    .panel-level-tag { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .panel-level-tag::before { content: ''; width: 18px; height: 1px; }
+    .panel-l1 .panel-level-tag { color: var(--l1); } .panel-l1 .panel-level-tag::before { background: var(--l1); }
+    .panel-l2 .panel-level-tag { color: var(--l2); } .panel-l2 .panel-level-tag::before { background: var(--l2); }
+    .panel-l3 .panel-level-tag { color: var(--l3); } .panel-l3 .panel-level-tag::before { background: var(--l3); }
+    .panel-l4 .panel-level-tag { color: var(--l4); } .panel-l4 .panel-level-tag::before { background: var(--l4); }
+    .panel-title { font-family: 'Syne', sans-serif; font-size: 2.8rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .panel-desc { font-size: 0.95rem; color: var(--muted); line-height: 1.75; }
+    .panel-profile-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 16px; }
+    .panel-traits { display: flex; flex-direction: column; gap: 10px; }
+    .trait { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--light); line-height: 1.5; }
+    .trait-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    .panel-l1 .trait-dot { background: var(--l1); } .panel-l2 .trait-dot { background: var(--l2); }
+    .panel-l3 .trait-dot { background: var(--l3); } .panel-l4 .trait-dot { background: var(--l4); }
+    .services-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+    .services-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .level-services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    .ls-card { padding: 28px 24px; border: 1px solid var(--border); border-radius: 4px; position: relative; overflow: hidden; transition: border-color 0.3s; }
+    .ls-card.available { background: rgba(255,255,255,0.02); }
+    .ls-card.locked { opacity: 0.4; }
+    .ls-card.available::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; }
+    .panel-l1 .ls-card.available::before { background: var(--l1); }
+    .panel-l2 .ls-card.available::before { background: var(--l2); }
+    .panel-l3 .ls-card.available::before { background: var(--l3); }
+    .panel-l4 .ls-card.available::before { background: var(--l4); }
+    .ls-status { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .ls-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
+    .ls-card.locked .ls-status { color: var(--muted); }
+    .ls-card.locked .ls-status::before { background: var(--muted); }
+    .panel-l1 .ls-card.available .ls-status { color: var(--l1); } .panel-l1 .ls-card.available .ls-status::before { background: var(--l1); }
+    .panel-l2 .ls-card.available .ls-status { color: var(--l2); } .panel-l2 .ls-card.available .ls-status::before { background: var(--l2); }
+    .panel-l3 .ls-card.available .ls-status { color: var(--l3); } .panel-l3 .ls-card.available .ls-status::before { background: var(--l3); }
+    .panel-l4 .ls-card.available .ls-status { color: var(--l4); } .panel-l4 .ls-card.available .ls-status::before { background: var(--l4); }
+    .ls-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .ls-why { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+    .ls-lock-reason { font-size: 0.75rem; color: var(--muted); margin-top: 8px; font-style: italic; }
+    .note-box { padding: 28px 32px; border: 1px solid var(--border); border-radius: 4px; display: flex; gap: 20px; align-items: flex-start; background: rgba(255,255,255,0.02); margin-bottom: 40px; }
+    .note-icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%; border: 1px solid; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; }
+    .panel-l1 .note-icon { border-color: var(--l1); color: var(--l1); } .panel-l2 .note-icon { border-color: var(--l2); color: var(--l2); }
+    .panel-l3 .note-icon { border-color: var(--l3); color: var(--l3); } .panel-l4 .note-icon { border-color: var(--l4); color: var(--l4); }
+    .note-label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; margin-bottom: 6px; }
+    .panel-l1 .note-label { color: var(--l1); } .panel-l2 .note-label { color: var(--l2); }
+    .panel-l3 .note-label { color: var(--l3); } .panel-l4 .note-label { color: var(--l4); }
+    .note-text { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      section { padding: 80px 24px; }
+      .hero { padding: 120px 24px 80px; min-height: auto; }
+      .hero-stats { position: static; margin-top: 60px; justify-content: flex-start; gap: 40px; flex-wrap: wrap; }
+      .hero-title { font-size: clamp(2.4rem, 10vw, 4rem); }
+      .hero-title .accent { min-width: 0; max-width: 100%; white-space: nowrap; }
+      .hero-title .line:nth-child(2) span { white-space: normal; flex-wrap: nowrap; }
+      .about { grid-template-columns: 1fr; gap: 60px; }
+      .about-visual { height: 260px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      footer { padding: 40px 24px 32px; }
+      .cursor, .cursor-ring { display: none; }
+      .quiz-card { padding: 32px 24px; }
+      .panel-header { grid-template-columns: 1fr; gap: 28px; padding: 32px 24px; }
+      .panel-title { font-size: 2rem; }
+      .level-services-grid { grid-template-columns: 1fr; }
+      .result-traits { grid-template-columns: 1fr; }
+      .result-services-grid { grid-template-columns: 1fr; }
+      .level-btn { padding: 0 16px; }
+      .level-orb { width: 48px; height: 48px; font-size: 1rem; }
+      .levels-nav { gap: 0; }
+      .cta-section { padding: 80px 24px; }
+      .quiz-section { padding: 80px 24px; }
+      .levels-section { padding: 80px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: clamp(2rem, 9vw, 2.8rem); }
+      .process-steps { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .stat-number { font-size: 2rem; }
+      .hero-stats { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="#" class="nav-logo">evas<span>tek</span></a>
+    <div class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#niveis">Níveis</a>
+      <a href="#quiz">Descobrir Nível</a>
+    </div>
+    <a href="#contato" class="nav-cta">Fale Conosco</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="particles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-label">Empresa Júnior de Marketing</div>
+    <h1 class="hero-title">
+      <span class="line"><span>Marketing que</span></span>
+      <span class="line"><span>move <span class="accent" id="typed-word">negócios</span></span></span>
+      <span class="line"><span>de verdade.</span></span>
+    </h1>
+    <p class="hero-desc">Estratégia, criatividade e dados trabalhando juntos. A Evastek entrega soluções completas de marketing para empresas que querem crescer com inteligência.</p>
+    <div class="hero-actions">
+      <a href="#quiz" class="btn-primary">Descobrir meu Nível</a>
+      <a href="#sobre" class="btn-ghost">
+        Conheça a Evastek
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-number"><span class="counter" data-target="12">0</span><span>+</span></div><div class="stat-label">Projetos</div></div>
+      <div class="stat"><div class="stat-number"><span class="counter" data-target="8">0</span><span>+</span></div><div class="stat-label">Clientes</div></div>
+      <div class="stat"><div class="stat-number"><span class="counter" data-target="93">0</span><span>%</span></div><div class="stat-label">Satisfação</div></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <div class="marquee-item"><span class="marquee-dot"></span>Branding</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Marketing Digital</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Social Media</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>SEO & Performance</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Criação de Conteúdo</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Gestão de Tráfego</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Identidade Visual</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Consultoria Estratégica</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Email Marketing</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Análise de Dados</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Branding</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Marketing Digital</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Social Media</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>SEO & Performance</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Criação de Conteúdo</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Gestão de Tráfego</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Identidade Visual</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Consultoria Estratégica</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Email Marketing</div>
+      <div class="marquee-item"><span class="marquee-dot"></span>Análise de Dados</div>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="about reveal">
+      <div class="about-text">
+        <div class="section-label">Sobre a Evastek</div>
+        <h2 class="section-title">Formados para<br>criar impacto.</h2>
+        <p>A Evastek é uma <strong>empresa júnior de marketing</strong> formada por estudantes universitários altamente capacitados e orientados por resultados. Combinamos o vigor acadêmico com a experiência prática do mercado.</p>
+        <p>Trabalhamos com <strong>todos os pilares do marketing moderno</strong> — do digital ao estratégico — entregando projetos com a seriedade e a qualidade de uma agência sênior, com a inovação de quem respira o mercado do futuro.</p>
+        <p>Nossa missão é simples: <strong>transformar o seu negócio</strong> com soluções inteligentes, criativas e mensuráveis.</p>
+      </div>
+      <div class="about-visual">
+        <div class="about-card main">
+          <div class="big-text">EJ</div>
+          <div class="card-title">Empresa Júnior</div>
+          <div class="card-desc">Parte do maior movimento de empreendedorismo jovem do Brasil.</div>
+        </div>
+        <div class="about-card float">
+          <div class="num">100%</div>
+          <div class="lbl">Dedicação</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos" class="services-section">
+    <div class="services-header reveal">
+      <div>
+        <div class="section-label">O que fazemos</div>
+        <h2 class="section-title">Serviços completos<br>de marketing.</h2>
+      </div>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="22" cy="22" r="18"/><path d="M22 10v24M10 22h24"/><circle cx="22" cy="22" r="6" fill="currentColor" opacity="0.15"/></svg>
+        <div class="service-name">Branding & Identidade Visual</div>
+        <div class="service-desc">Criamos marcas que ficam na memória. Logotipo, paleta, tipografia e manual de identidade para posicionar sua empresa com clareza.</div>
+        <div class="service-tags"><span class="tag">Logo</span><span class="tag">Manual</span><span class="tag">Papelaria</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="10" width="32" height="24" rx="3"/><path d="M6 18h32M14 14h2M20 14h2"/><path d="M14 26l4 4 10-8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="service-name">Marketing Digital</div>
+        <div class="service-desc">Estratégias integradas para presença online: SEO, tráfego pago, e-mail marketing e muito mais — com foco total em conversão.</div>
+        <div class="service-tags"><span class="tag">SEO</span><span class="tag">Google Ads</span><span class="tag">E-mail</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 34L16 20l8 8 6-10 6 16"/><circle cx="16" cy="12" r="4"/><circle cx="30" cy="8" r="3"/></svg>
+        <div class="service-name">Social Media</div>
+        <div class="service-desc">Gerenciamento estratégico de redes sociais: planejamento de conteúdo, criação de posts e gestão da comunidade para engajar sua audiência.</div>
+        <div class="service-tags"><span class="tag">Instagram</span><span class="tag">LinkedIn</span><span class="tag">TikTok</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 36l8-14 8 6 8-12 8 8"/><path d="M34 10h-8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="service-name">Gestão de Tráfego</div>
+        <div class="service-desc">Campanhas pagas com performance monitorada: Meta Ads, Google Ads e plataformas afins para maximizar seu ROI com precisão.</div>
+        <div class="service-tags"><span class="tag">Meta Ads</span><span class="tag">Google</span><span class="tag">ROI</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 34V20l12-10 12 10v14"/><rect x="16" y="24" width="12" height="10"/><path d="M22 14v4"/></svg>
+        <div class="service-name">Criação de Conteúdo</div>
+        <div class="service-desc">Textos, artes, vídeos e peças criativas que comunicam com impacto. Conteúdo pensado para cada canal e cada etapa do funil.</div>
+        <div class="service-tags"><span class="tag">Copywriting</span><span class="tag">Design</span><span class="tag">Vídeo</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="22" cy="16" r="8"/><path d="M8 36c0-7.7 6.3-14 14-14s14 6.3 14 14"/><path d="M28 20l6 6M22 24v8" stroke-linecap="round"/></svg>
+        <div class="service-name">Consultoria Estratégica</div>
+        <div class="service-desc">Diagnóstico de marketing, análise de concorrência e planejamento estratégico para orientar as decisões da sua empresa com inteligência.</div>
+        <div class="service-tags"><span class="tag">Diagnóstico</span><span class="tag">Planejamento</span><span class="tag">Dados</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESSO -->
+  <section id="processo">
+    <div class="reveal">
+      <div class="section-label">Como trabalhamos</div>
+      <h2 class="section-title">Um processo claro,<br>resultados concretos.</h2>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step"><div class="step-dot"></div><div class="step-num">01 — Diagnóstico</div><div class="step-title">Entendemos seu negócio</div><div class="step-desc">Mergulhamos no seu contexto: mercado, concorrentes, público e objetivos. Sem suposições, só dados.</div></div>
+      <div class="process-step"><div class="step-dot"></div><div class="step-num">02 — Estratégia</div><div class="step-title">Construímos o plano</div><div class="step-desc">Com base no diagnóstico, desenhamos um plano de ação personalizado com metas, canais e KPIs definidos.</div></div>
+      <div class="process-step"><div class="step-dot"></div><div class="step-num">03 — Execução</div><div class="step-title">Colocamos em prática</div><div class="step-desc">Nossa equipe executa com agilidade e qualidade, mantendo você atualizado em cada etapa do processo.</div></div>
+      <div class="process-step"><div class="step-dot"></div><div class="step-num">04 — Resultados</div><div class="step-title">Medimos e evoluímos</div><div class="step-desc">Analisamos os resultados com rigor e ajustamos continuamente para garantir a máxima performance.</div></div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos" class="testimonials-section">
+    <div class="reveal">
+      <div class="section-label">O que dizem</div>
+      <h2 class="section-title">Clientes que confiam<br>na Evastek.</h2>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card"><div class="quote-mark">"</div><div class="testimonial-text">A Evastek transformou nossa presença digital. Em três meses, nossas redes sociais cresceram 180% e as vendas online dobraram. Profissionalismo de outro nível para uma equipe jovem.</div><div class="testimonial-author"><div class="author-avatar">AC</div><div><div class="author-name">Ana Carolina</div></div></div></div>
+      <div class="testimonial-card"><div class="quote-mark">"</div><div class="testimonial-text">Contratar a Evastek foi a melhor decisão estratégica do ano. Eles entenderam nosso negócio rapidamente e entregaram um branding que realmente nos representa no mercado.</div><div class="testimonial-author"><div class="author-avatar">MR</div><div><div class="author-name">Marcos Ribeiro</div></div></div></div>
+      <div class="testimonial-card"><div class="quote-mark">"</div><div class="testimonial-text">Resultado acima do esperado em tráfego pago. Reduziram nosso CAC em 40% enquanto aumentavam o volume de leads. São detalhistas, comunicativos e muito competentes.</div><div class="testimonial-author"><div class="author-avatar">JS</div><div><div class="author-name">Juliana Santos</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- ========================
+       QUIZ SECTION
+  ========================= -->
+  <section id="quiz" class="quiz-section">
+    <div class="quiz-section-bg"></div>
+    <div class="quiz-wrap">
+      <div class="quiz-header reveal">
+        <div class="section-label">Diagnóstico Gratuito</div>
+        <h2 class="section-title">Em qual nível está<br>o seu negócio?</h2>
+        <p style="color:var(--muted);font-size:0.98rem;line-height:1.7;max-width:520px;margin:0 auto;">Responda 7 perguntas rápidas e descubra exatamente onde você está — e quais serviços vão gerar o maior resultado para a sua empresa.</p>
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="quiz-progress-wrap" id="quiz-progress-wrap">
+        <div class="quiz-progress-info">
+          <span class="quiz-progress-label">Progresso</span>
+          <span class="quiz-progress-count" id="quiz-progress-count">1 / 7</span>
+        </div>
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
+      </div>
+
+      <!-- QUESTION CARD -->
+      <div class="quiz-card" id="quiz-card">
+        <div class="quiz-q-num" id="quiz-q-num">Pergunta 01</div>
+        <div class="quiz-question" id="quiz-question"></div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-nav">
+          <button class="quiz-btn quiz-btn-back" id="quiz-btn-back" onclick="quizBack()">← Voltar</button>
+          <button class="quiz-btn quiz-btn-next" id="quiz-btn-next" onclick="quizNext()" disabled>Próxima →</button>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="quiz-result" id="quiz-result"></div>
+    </div>
+  </section>
+
+  <!-- NIVEIS SECTION -->
+  <section id="niveis" class="levels-section">
+    <div class="levels-section-header reveal">
+      <div class="section-label">Sistema de Maturidade</div>
+      <h2 class="section-title">Os 4 níveis<br>de evolução.</h2>
+      <p style="color:var(--muted);font-size:0.98rem;line-height:1.7;max-width:560px;margin:16px auto 0;">Cada empresa se encontra em um estágio diferente. Identificamos o seu nível para oferecer exatamente os serviços que vão gerar resultado real.</p>
+    </div>
+    <div class="levels-nav">
+      <button class="level-btn active" data-level="1" onclick="selectLevel(1)"><div class="level-orb">01</div><span class="level-name">Semente</span></button>
+      <button class="level-btn" data-level="2" onclick="selectLevel(2)"><div class="level-orb">02</div><span class="level-name">Raiz</span></button>
+      <button class="level-btn" data-level="3" onclick="selectLevel(3)"><div class="level-orb">03</div><span class="level-name">Tronco</span></button>
+      <button class="level-btn" data-level="4" onclick="selectLevel(4)"><div class="level-orb">04</div><span class="level-name">Copa</span></button>
+    </div>
+
+    <div style="max-width:1100px;margin:0 auto;padding:0 0 40px;">
+
+      <div class="detail-panel panel-l1 active" id="panel-1">
+        <div class="panel-header"><div><div class="panel-level-tag">Nível 01 — Semente</div><h2 class="panel-title">Construindo<br>a base.</h2><p class="panel-desc">Empresa em fase inicial. Ainda não existe identidade de marca definida, presença digital estruturada ou estratégia de comunicação. O foco aqui é criar os alicerces que sustentarão tudo que vem depois.</p></div><div><div class="panel-profile-title">Perfil típico deste nível</div><div class="panel-traits"><div class="trait"><div class="trait-dot"></div><span>Empresa com menos de 1 ano de operação</span></div><div class="trait"><div class="trait-dot"></div><span>Sem logo, paleta de cores ou identidade visual definida</span></div><div class="trait"><div class="trait-dot"></div><span>Presença nas redes sociais inexistente ou informal</span></div><div class="trait"><div class="trait-dot"></div><span>Clientes chegam quase exclusivamente por indicação</span></div><div class="trait"><div class="trait-dot"></div><span>Sem estratégia de marketing ou comunicação definida</span></div></div></div><div class="panel-big-num">01</div></div>
+        <div class="services-title">Serviços disponíveis neste nível</div>
+        <div class="level-services-grid">
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Branding & Identidade Visual</div><div class="ls-why">O primeiro passo de qualquer empresa. Criamos a identidade que vai representar sua marca em todos os canais.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Criação de Conteúdo</div><div class="ls-why">Produzimos os primeiros conteúdos que vão apresentar sua marca ao mercado com clareza e profissionalismo.</div></div>
+          <div class="ls-card locked"><div class="ls-status">Bloqueado</div><div class="ls-name">Social Media</div><div class="ls-why">Gerenciar redes exige identidade e conteúdo já definidos.</div><div class="ls-lock-reason">Disponível a partir do Nível 2</div></div>
+          <div class="ls-card locked"><div class="ls-status">Bloqueado</div><div class="ls-name">Marketing Digital</div><div class="ls-why">Requer uma base de marca estabelecida para funcionar.</div><div class="ls-lock-reason">Disponível a partir do Nível 2</div></div>
+          <div class="ls-card locked"><div class="ls-status">Bloqueado</div><div class="ls-name">Consultoria Estratégica</div><div class="ls-why">Estratégia avançada para quem já tem operação consolidada.</div><div class="ls-lock-reason">Disponível a partir do Nível 3</div></div>
+          <div class="ls-card locked"><div class="ls-status">Bloqueado</div><div class="ls-name">Gestão de Tráfego</div><div class="ls-why">Tráfego pago sem estrutura gera desperdício de investimento.</div><div class="ls-lock-reason">Disponível apenas no Nível 4</div></div>
+        </div>
+        <div class="note-box"><div class="note-icon">!</div><div><div class="note-label">Por que essa limitação existe?</div><div class="note-text">Investir em tráfego pago ou gestão de redes sem uma identidade sólida é como construir uma casa sem alicerce. O dinheiro é gasto, mas o retorno não vem — porque não existe estrutura para receber o cliente. Nossa responsabilidade é proteger o seu investimento.</div></div></div>
+      </div>
+
+      <div class="detail-panel panel-l2" id="panel-2">
+        <div class="panel-header"><div><div class="panel-level-tag">Nível 02 — Raiz</div><h2 class="panel-title">Crescendo<br>com presença.</h2><p class="panel-desc">A empresa já opera, tem identidade e começa a se posicionar. Agora é hora de construir audiência, comunicar com consistência e transformar presença digital em relacionamento real com o cliente.</p></div><div><div class="panel-profile-title">Perfil típico deste nível</div><div class="panel-traits"><div class="trait"><div class="trait-dot"></div><span>Empresa com 1 a 3 anos de operação</span></div><div class="trait"><div class="trait-dot"></div><span>Identidade visual básica já definida</span></div><div class="trait"><div class="trait-dot"></div><span>Presença nas redes sociais, mas sem consistência</span></div><div class="trait"><div class="trait-dot"></div><span>Base de clientes inicial, mas crescimento lento</span></div><div class="trait"><div class="trait-dot"></div><span>Comunicação ainda sem estratégia definida</span></div></div></div><div class="panel-big-num">02</div></div>
+        <div class="services-title">Serviços disponíveis neste nível</div>
+        <div class="level-services-grid">
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Branding & Identidade Visual</div><div class="ls-why">Refinamento ou atualização da identidade para acompanhar o crescimento da marca.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Criação de Conteúdo</div><div class="ls-why">Produção consistente de conteúdo para nutrir a audiência que está sendo construída.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Social Media</div><div class="ls-why">Gestão estratégica das redes para construir comunidade e aumentar o alcance orgânico.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Marketing Digital</div><div class="ls-why">Estratégias integradas de presença online, SEO e e-mail para atrair e converter clientes.</div></div>
+          <div class="ls-card locked"><div class="ls-status">Bloqueado</div><div class="ls-name">Consultoria Estratégica</div><div class="ls-why">Requer operação consolidada e dados de desempenho para ser efetiva.</div><div class="ls-lock-reason">Disponível a partir do Nível 3</div></div>
+          <div class="ls-card locked"><div class="ls-status">Bloqueado</div><div class="ls-name">Gestão de Tráfego</div><div class="ls-why">Sem audiência orgânica estabelecida, o tráfego pago tem retorno muito baixo.</div><div class="ls-lock-reason">Disponível apenas no Nível 4</div></div>
+        </div>
+        <div class="note-box"><div class="note-icon">!</div><div><div class="note-label">Por que essa limitação existe?</div><div class="note-text">Tráfego pago multiplica o que já funciona. Se a presença orgânica ainda está sendo construída, pagar para trazer mais pessoas para um perfil ou site sem estrutura significa desperdiçar orçamento. Primeiro construímos a base, depois aceleramos.</div></div></div>
+      </div>
+
+      <div class="detail-panel panel-l3" id="panel-3">
+        <div class="panel-header"><div><div class="panel-level-tag">Nível 03 — Tronco</div><h2 class="panel-title">Estruturando<br>para escalar.</h2><p class="panel-desc">A empresa está consolidada, tem clientes recorrentes e presença digital estabelecida. O desafio agora é estruturar processos, analisar dados e criar uma estratégia que prepare o terreno para a próxima fase de crescimento.</p></div><div><div class="panel-profile-title">Perfil típico deste nível</div><div class="panel-traits"><div class="trait"><div class="trait-dot"></div><span>Empresa com 3 ou mais anos de operação</span></div><div class="trait"><div class="trait-dot"></div><span>Marca reconhecida no seu nicho ou região</span></div><div class="trait"><div class="trait-dot"></div><span>Presença digital ativa com audiência estabelecida</span></div><div class="trait"><div class="trait-dot"></div><span>Crescimento constante mas ainda abaixo do potencial</span></div><div class="trait"><div class="trait-dot"></div><span>Buscando otimizar processos e escalar resultados</span></div></div></div><div class="panel-big-num">03</div></div>
+        <div class="services-title">Serviços disponíveis neste nível</div>
+        <div class="level-services-grid">
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Branding & Identidade Visual</div><div class="ls-why">Evolução estratégica da marca para refletir o novo posicionamento e maturidade da empresa.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Criação de Conteúdo</div><div class="ls-why">Conteúdo de autoridade para consolidar a empresa como referência no seu mercado.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Social Media</div><div class="ls-why">Gestão avançada das redes com foco em conversão e fortalecimento de autoridade.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Marketing Digital</div><div class="ls-why">Estratégias integradas para maximizar conversão e retenção de clientes.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Consultoria Estratégica</div><div class="ls-why">Diagnóstico completo, análise de dados e planejamento para o próximo ciclo de crescimento.</div></div>
+          <div class="ls-card locked"><div class="ls-status">Bloqueado</div><div class="ls-name">Gestão de Tráfego</div><div class="ls-why">A estrutura ainda está sendo otimizada. Tráfego pago vem após a consultoria estratégica.</div><div class="ls-lock-reason">Disponível apenas no Nível 4</div></div>
+        </div>
+        <div class="note-box"><div class="note-icon">!</div><div><div class="note-label">Por que essa limitação existe?</div><div class="note-text">Antes de acelerar com tráfego pago, é preciso que a consultoria estratégica identifique gargalos, otimize funis e garanta que a estrutura de conversão esteja pronta. Acelerar sem isso é como colocar mais combustível em um motor com vazamento.</div></div></div>
+      </div>
+
+      <div class="detail-panel panel-l4" id="panel-4">
+        <div class="panel-header"><div><div class="panel-level-tag">Nível 04 — Copa</div><h2 class="panel-title">Dominando<br>o mercado.</h2><p class="panel-desc">A empresa está madura, estruturada e pronta para escalar. Todos os recursos da Evastek estão disponíveis. O objetivo agora é crescimento acelerado, autoridade de marca e dominância no mercado.</p></div><div><div class="panel-profile-title">Perfil típico deste nível</div><div class="panel-traits"><div class="trait"><div class="trait-dot"></div><span>Empresa consolidada com operação estruturada</span></div><div class="trait"><div class="trait-dot"></div><span>Marca forte e reconhecida no mercado</span></div><div class="trait"><div class="trait-dot"></div><span>Presença digital sólida com audiência fiel</span></div><div class="trait"><div class="trait-dot"></div><span>Processos de marketing bem definidos</span></div><div class="trait"><div class="trait-dot"></div><span>Pronta para investir em escala e crescimento acelerado</span></div></div></div><div class="panel-big-num">04</div></div>
+        <div class="services-title">Todos os serviços disponíveis</div>
+        <div class="level-services-grid">
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Branding & Identidade Visual</div><div class="ls-why">Reposicionamento da marca para refletir liderança e autoridade máxima no mercado.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Criação de Conteúdo</div><div class="ls-why">Conteúdo de alto impacto que posiciona a empresa como a principal referência do setor.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Social Media</div><div class="ls-why">Gestão completa das redes com estratégia de dominância e engajamento em escala.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Marketing Digital</div><div class="ls-why">Estratégias avançadas de aquisição, retenção e fidelização em múltiplos canais.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Consultoria Estratégica</div><div class="ls-why">Planejamento de alto nível para maximizar potencial e criar vantagem competitiva sustentável.</div></div>
+          <div class="ls-card available"><div class="ls-status">Disponível</div><div class="ls-name">Gestão de Tráfego</div><div class="ls-why">Com estrutura sólida, cada real investido em tráfego se torna um multiplicador real de resultados.</div></div>
+        </div>
+        <div class="note-box"><div class="note-icon">✓</div><div><div class="note-label">Acesso completo</div><div class="note-text">No Nível 4, todos os serviços da Evastek estão disponíveis. A empresa chegou aqui com uma base sólida, e agora cada ferramenta de marketing vai trabalhar em conjunto para gerar o máximo resultado possível.</div></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contato" class="cta-section">
+    <div class="cta-bg"></div>
+    <div class="section-label">Vamos conversar</div>
+    <h2 class="cta-title">Pronto para <span style="color:var(--accent-light)">crescer</span>?</h2>
+    <p class="cta-desc">Conte-nos sobre o seu projeto. A Evastek está pronta para ser a parceira estratégica que o seu negócio precisa.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/5528999959784?text=Olá!%20Vim%20pelo%20site%20da%20Evastek%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20de%20marketing.%20Podemos%20conversar%3F" target="_blank" class="btn-primary">Enviar Proposta</a>
+      <a href="https://wa.me/5528999959784" target="_blank" class="btn-outline">WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">evas<span>tek</span></a>
+        <p>Empresa Júnior de Marketing. Criatividade, estratégia e resultados para o seu negócio crescer.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Serviços</div>
+        <ul class="footer-links">
+          <li><a href="#servicos">Branding</a></li>
+          <li><a href="#servicos">Marketing Digital</a></li>
+          <li><a href="#servicos">Social Media</a></li>
+          <li><a href="#servicos">Tráfego Pago</a></li>
+          <li><a href="#servicos">Consultoria</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Empresa</div>
+        <ul class="footer-links">
+          <li><a href="#sobre">Sobre nós</a></li>
+          <li><a href="#processo">Processo</a></li>
+          <li><a href="#niveis">Níveis</a></li>
+          <li><a href="#quiz">Quiz</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contato</div>
+        <ul class="footer-links">
+          <li><a href="mailto:evastekcontato@gmail.com">evastekcontato@gmail.com</a></li>
+          <li><a href="https://wa.me/5528999959784">(28) 99995-9784</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Evastek — Empresa Júnior de Marketing. Todos os direitos reservados.</div>
+      <div class="footer-socials">
+        <a href="#">in</a>
+        <a href="#">ig</a>
+        <a href="#">wa</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  // ── CURSOR ──
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 60);
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+
+  // ── PARTICLES ──
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  function resizeCanvas() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+  resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+  function Particle() { this.x = Math.random()*W; this.y = Math.random()*H; this.vx = (Math.random()-0.5)*0.4; this.vy = (Math.random()-0.5)*0.4; this.r = Math.random()*1.5+0.5; this.alpha = Math.random()*0.5+0.1; }
+  for (let i=0;i<80;i++) particles.push(new Particle());
+  function drawParticles() {
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(74,158,221,${p.alpha})`; ctx.fill();
+    });
+    for(let i=0;i<particles.length;i++) for(let j=i+1;j<particles.length;j++) {
+      const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y, dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120) { ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.strokeStyle=`rgba(74,158,221,${0.12*(1-dist/120)})`; ctx.lineWidth=0.6; ctx.stroke(); }
+    }
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  // ── TYPING ──
+  const words = ['negócios','marcas','resultados','estratégias','clientes'];
+  let wordIndex=0, charIndex=0, deleting=false;
+  const typedEl = document.getElementById('typed-word');
+  const typedLine = typedEl.closest('.line');
+
+  // Fix desktop (parede invisível): após a animação de entrada terminar,
+  // libera o overflow do .line que cortava palavras longas
+  setTimeout(() => { typedLine.style.overflow = 'visible'; }, 1200);
+
+  function type() {
+    const word = words[wordIndex];
+    if(!deleting) { typedEl.textContent=word.substring(0,charIndex+1); charIndex++; if(charIndex===word.length){deleting=true;setTimeout(type,3000);return;} }
+    else { typedEl.textContent=word.substring(0,charIndex-1); charIndex--; if(charIndex===0){deleting=false;wordIndex=(wordIndex+1)%words.length;} }
+    setTimeout(type, deleting?90:150);
+  }
+  setTimeout(type,2000);
+  typedEl.style.borderRight='3px solid #4a9edd'; typedEl.style.paddingRight='4px';
+  setInterval(()=>{ typedEl.style.borderColor=typedEl.style.borderColor==='transparent'?'#4a9edd':'transparent'; },530);
+
+  // ── COUNTERS ──
+  function animateCounter(el) {
+    const target=parseInt(el.dataset.target), duration=3500, start=performance.now();
+    function update(now) { const e=now-start,p=Math.min(e/duration,1),ease=1-Math.pow(1-p,4); el.textContent=Math.floor(ease*target); if(p<1)requestAnimationFrame(update); else el.textContent=target; }
+    requestAnimationFrame(update);
+  }
+  const counters=document.querySelectorAll('.counter'); let countersStarted=false;
+  function checkCounters() { if(countersStarted)return; counters.forEach(c=>{ const r=c.getBoundingClientRect(); if(r.top<window.innerHeight){countersStarted=true;counters.forEach(animateCounter);} }); }
+  window.addEventListener('scroll',checkCounters,{passive:true}); checkCounters();
+
+  // ── PARALLAX ──
+  const heroBg=document.querySelector('.hero-bg'), heroGrid=document.querySelector('.hero-grid');
+  window.addEventListener('scroll',()=>{ const s=window.scrollY; if(heroBg)heroBg.style.transform=`translateY(${s*.25}px)`; if(heroGrid)heroGrid.style.transform=`translateY(${s*.1}px)`; },{passive:true});
+
+  // ── REVEAL ──
+  const reveals=document.querySelectorAll('.reveal');
+  function checkReveal() { reveals.forEach(el=>{ if(el.getBoundingClientRect().top<window.innerHeight*.95)el.classList.add('visible'); }); }
+  checkReveal(); window.addEventListener('scroll',checkReveal,{passive:true}); window.addEventListener('resize',checkReveal,{passive:true});
+
+  // ── NAV SCROLL ──
+  window.addEventListener('scroll',()=>{ document.querySelector('nav').style.background=window.scrollY>80?'rgba(28,31,38,0.97)':'linear-gradient(to bottom, rgba(28,31,38,0.95) 0%, transparent 100%)'; });
+
+  // ── LEVELS NAV ──
+  function selectLevel(n) {
+    document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.detail-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelector(`[data-level="${n}"]`).classList.add('active');
+    const panel=document.getElementById('panel-'+n);
+    panel.classList.add('active');
+  }
+
+  // ══════════════════════════════
+  //   Q U I Z   L O G I C
+  // ══════════════════════════════
+  const QUESTIONS = [
+    {
+      q: "Há quanto tempo a sua empresa está no mercado?",
+      opts: [
+        { label: "Ainda estou começando — menos de 1 ano", score: 1 },
+        { label: "Entre 1 e 3 anos de operação", score: 2 },
+        { label: "De 3 a 5 anos no mercado", score: 3 },
+        { label: "Mais de 5 anos com operação consolidada", score: 4 }
+      ]
+    },
+    {
+      q: "Como está a identidade visual da sua empresa?",
+      opts: [
+        { label: "Não tenho logo nem identidade visual definida", score: 1 },
+        { label: "Tenho algo básico, mas não é profissional", score: 2 },
+        { label: "Tenho uma identidade visual completa e consistente", score: 3 },
+        { label: "Minha marca é forte e reconhecida no mercado", score: 4 }
+      ]
+    },
+    {
+      q: "Como é a presença da sua empresa nas redes sociais?",
+      opts: [
+        { label: "Não tenho perfis ou são informais/abandonados", score: 1 },
+        { label: "Tenho perfis, mas publico de forma irregular", score: 2 },
+        { label: "Publico com certa frequência e tenho audiência crescendo", score: 3 },
+        { label: "Tenho audiência fiel, engajamento alto e estratégia definida", score: 4 }
+      ]
+    },
+    {
+      q: "Como seus clientes te encontram hoje?",
+      opts: [
+        { label: "Quase que exclusivamente por indicação boca a boca", score: 1 },
+        { label: "Indicações + um pouco de redes sociais", score: 2 },
+        { label: "Redes sociais, SEO e estratégias de conteúdo", score: 3 },
+        { label: "Múltiplos canais: orgânico, pago e indicação em escala", score: 4 }
+      ]
+    },
+    {
+      q: "Você já investiu em tráfego pago (Meta Ads, Google Ads)?",
+      opts: [
+        { label: "Não, nunca investi em anúncios pagos", score: 1 },
+        { label: "Já testei, mas sem estratégia e com resultados fracos", score: 2 },
+        { label: "Invisto ocasionalmente com resultados medianos", score: 3 },
+        { label: "Tenho campanhas rodando com bom ROI e gestão profissional", score: 4 }
+      ]
+    },
+    {
+      q: "Como você descreveria o crescimento da sua empresa nos últimos 12 meses?",
+      opts: [
+        { label: "Ainda não tenho dados suficientes ou estou no início", score: 1 },
+        { label: "Crescimento lento, sem grande previsibilidade", score: 2 },
+        { label: "Crescimento constante, mas ainda abaixo do potencial", score: 3 },
+        { label: "Crescimento acelerado com metas claras e resultados mensuráveis", score: 4 }
+      ]
+    },
+    {
+      q: "Qual é o principal objetivo que você quer alcançar com o marketing agora?",
+      opts: [
+        { label: "Criar minha identidade e aparecer profissionalmente", score: 1 },
+        { label: "Construir presença digital e atrair mais clientes organicamente", score: 2 },
+        { label: "Estruturar processos e escalar os resultados que já tenho", score: 3 },
+        { label: "Dominar o mercado e escalar de forma agressiva e inteligente", score: 4 }
+      ]
+    }
+  ];
+
+  const LEVELS = {
+    1: {
+      num: "01", name: "Semente", color: "var(--l1)", cls: "lv1", bgCls: "lv1-bg",
+      headline: "Construindo a base.", tagline: "Nível 01 — Semente",
+      desc: "Sua empresa está na fase inicial e precisa construir os alicerces do marketing. O foco agora é criar identidade e fazer a marca existir de forma profissional no mercado.",
+      traits: ["Empresa em fase inicial de operação","Sem identidade visual definida","Presença digital mínima ou inexistente","Clientes chegam por indicação"],
+      note: "Investir em tráfego pago ou gestão de redes sem identidade sólida é desperdiçar orçamento. Nossa responsabilidade é proteger o seu investimento e construir a base certa.",
+      noteIcon: "!",
+      noteLabel: "Por que construir antes de escalar?",
+      services: [
+        { name: "Branding & Identidade Visual", why: "O primeiro passo. Criamos a identidade que vai representar sua marca.", available: true },
+        { name: "Criação de Conteúdo", why: "Os primeiros conteúdos que apresentarão sua marca ao mercado.", available: true },
+        { name: "Social Media", why: "Gerenciar redes exige identidade e conteúdo já definidos.", available: false, lock: "Disponível a partir do Nível 2" },
+        { name: "Marketing Digital", why: "Requer uma base de marca estabelecida para funcionar.", available: false, lock: "Disponível a partir do Nível 2" },
+        { name: "Consultoria Estratégica", why: "Estratégia avançada para quem já tem operação consolidada.", available: false, lock: "Disponível a partir do Nível 3" },
+        { name: "Gestão de Tráfego", why: "Tráfego pago sem estrutura gera desperdício.", available: false, lock: "Disponível apenas no Nível 4" }
+      ]
+    },
+    2: {
+      num: "02", name: "Raiz", color: "var(--l2)", cls: "lv2", bgCls: "lv2-bg",
+      headline: "Crescendo com presença.", tagline: "Nível 02 — Raiz",
+      desc: "A base existe. Agora é hora de construir audiência, comunicar com consistência e transformar presença digital em relacionamento real com o cliente.",
+      traits: ["1 a 3 anos de operação","Identidade visual básica definida","Redes sociais ativas mas inconsistentes","Base de clientes inicial com crescimento lento"],
+      note: "Tráfego pago multiplica o que já funciona. Se a presença orgânica ainda está sendo construída, pagar para trazer mais pessoas para um perfil sem estrutura significa desperdiçar orçamento.",
+      noteIcon: "!",
+      noteLabel: "Por que ainda não acelerar?",
+      services: [
+        { name: "Branding & Identidade Visual", why: "Refinamento da identidade para acompanhar o crescimento.", available: true },
+        { name: "Criação de Conteúdo", why: "Produção consistente para nutrir a audiência crescente.", available: true },
+        { name: "Social Media", why: "Gestão estratégica das redes para construir comunidade.", available: true },
+        { name: "Marketing Digital", why: "Estratégias integradas de presença online, SEO e e-mail.", available: true },
+        { name: "Consultoria Estratégica", why: "Requer operação consolidada e dados de desempenho.", available: false, lock: "Disponível a partir do Nível 3" },
+        { name: "Gestão de Tráfego", why: "Sem audiência orgânica, o tráfego pago tem retorno muito baixo.", available: false, lock: "Disponível apenas no Nível 4" }
+      ]
+    },
+    3: {
+      num: "03", name: "Tronco", color: "var(--l3)", cls: "lv3", bgCls: "lv3-bg",
+      headline: "Estruturando para escalar.", tagline: "Nível 03 — Tronco",
+      desc: "Empresa consolidada com clientes recorrentes e presença digital estabelecida. O desafio é estruturar processos, analisar dados e preparar o terreno para a próxima fase de crescimento.",
+      traits: ["3 ou mais anos de operação","Marca reconhecida no nicho ou região","Presença digital ativa com audiência","Crescimento constante abaixo do potencial"],
+      note: "Antes de acelerar com tráfego pago, a consultoria estratégica precisa identificar gargalos, otimizar funis e garantir que a estrutura de conversão esteja pronta. Combustível em motor com vazamento não adianta.",
+      noteIcon: "!",
+      noteLabel: "Por que a ordem importa?",
+      services: [
+        { name: "Branding & Identidade Visual", why: "Evolução estratégica para refletir o novo posicionamento.", available: true },
+        { name: "Criação de Conteúdo", why: "Conteúdo de autoridade para consolidar a empresa como referência.", available: true },
+        { name: "Social Media", why: "Gestão avançada com foco em conversão e autoridade.", available: true },
+        { name: "Marketing Digital", why: "Estratégias integradas para maximizar conversão e retenção.", available: true },
+        { name: "Consultoria Estratégica", why: "Diagnóstico completo e planejamento para o próximo ciclo.", available: true },
+        { name: "Gestão de Tráfego", why: "A estrutura está sendo otimizada. Tráfego pago vem após a consultoria.", available: false, lock: "Disponível apenas no Nível 4" }
+      ]
+    },
+    4: {
+      num: "04", name: "Copa", color: "var(--l4)", cls: "lv4", bgCls: "lv4-bg",
+      headline: "Dominando o mercado.", tagline: "Nível 04 — Copa",
+      desc: "A empresa está madura, estruturada e pronta para escalar. Todos os recursos da Evastek estão disponíveis. O objetivo agora é crescimento acelerado, autoridade de marca e dominância no mercado.",
+      traits: ["Empresa consolidada e estruturada","Marca forte e reconhecida no mercado","Presença digital sólida com audiência fiel","Pronta para escalar de forma agressiva"],
+      note: "No Nível 4, todos os serviços da Evastek estão disponíveis. Com base sólida, cada ferramenta de marketing trabalha em conjunto para gerar o máximo resultado possível.",
+      noteIcon: "✓",
+      noteLabel: "Acesso completo",
+      services: [
+        { name: "Branding & Identidade Visual", why: "Reposicionamento para refletir liderança e autoridade máxima.", available: true },
+        { name: "Criação de Conteúdo", why: "Conteúdo de alto impacto que posiciona como referência do setor.", available: true },
+        { name: "Social Media", why: "Gestão completa com estratégia de dominância e engajamento.", available: true },
+        { name: "Marketing Digital", why: "Estratégias avançadas de aquisição, retenção e fidelização.", available: true },
+        { name: "Consultoria Estratégica", why: "Planejamento de alto nível para criar vantagem competitiva.", available: true },
+        { name: "Gestão de Tráfego", why: "Cada real investido torna-se um multiplicador real de resultados.", available: true }
+      ]
+    }
+  };
+
+  let currentQ = 0;
+  let answers = new Array(QUESTIONS.length).fill(null);
+  let selectedOpt = null;
+
+  function renderQuestion() {
+    const q = QUESTIONS[currentQ];
+    const card = document.getElementById('quiz-card');
+    const back = document.getElementById('quiz-btn-back');
+    const next = document.getElementById('quiz-btn-next');
+
+    document.getElementById('quiz-q-num').textContent = `Pergunta ${String(currentQ+1).padStart(2,'0')}`;
+    document.getElementById('quiz-question').textContent = q.q;
+    document.getElementById('quiz-progress-count').textContent = `${currentQ+1} / ${QUESTIONS.length}`;
+    document.getElementById('quiz-progress-fill').style.width = `${((currentQ+1)/QUESTIONS.length)*100}%`;
+
+    back.style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+    next.textContent = currentQ === QUESTIONS.length - 1 ? 'Ver Resultado →' : 'Próxima →';
+
+    const optsContainer = document.getElementById('quiz-options');
+    optsContainer.innerHTML = '';
+    q.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-option' + (answers[currentQ] === i ? ' selected' : '');
+      btn.innerHTML = `<span class="opt-dot"></span><span class="opt-label">${opt.label}</span>`;
+      btn.addEventListener('click', () => selectOption(i, btn));
+      optsContainer.appendChild(btn);
+    });
+
+    next.disabled = answers[currentQ] === null;
+    selectedOpt = answers[currentQ];
+  }
+
+  function selectOption(index, btn) {
+    document.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers[currentQ] = index;
+    selectedOpt = index;
+    document.getElementById('quiz-btn-next').disabled = false;
+  }
+
+  function animateCardTransition(outClass, inClass, callback) {
+    const card = document.getElementById('quiz-card');
+    card.classList.add(outClass);
+    setTimeout(() => {
+      card.classList.remove(outClass);
+      callback();
+      card.classList.add(inClass);
+      setTimeout(() => card.classList.remove(inClass), 400);
+    }, 280);
+  }
+
+  function quizNext() {
+    if (answers[currentQ] === null) return;
+    if (currentQ < QUESTIONS.length - 1) {
+      animateCardTransition('slide-out-left', 'slide-in-right', () => {
+        currentQ++;
+        renderQuestion();
+      });
+    } else {
+      showResult();
+    }
+  }
+
+  function quizBack() {
+    if (currentQ === 0) return;
+    animateCardTransition('slide-out-right', 'slide-in-left', () => {
+      currentQ--;
+      renderQuestion();
+    });
+  }
+
+  function calcLevel() {
+    const total = answers.reduce((sum, a, i) => sum + (a !== null ? QUESTIONS[i].opts[a].score : 0), 0);
+    const avg = total / QUESTIONS.length;
+    if (avg <= 1.7) return 1;
+    if (avg <= 2.5) return 2;
+    if (avg <= 3.3) return 3;
+    return 4;
+  }
+
+  function showResult() {
+    const lvl = calcLevel();
+    const lv = LEVELS[lvl];
+
+    document.getElementById('quiz-progress-wrap').style.display = 'none';
+    document.getElementById('quiz-card').style.display = 'none';
+
+    const result = document.getElementById('quiz-result');
+    result.innerHTML = `
+      <div style="text-align:center;margin-bottom:36px;">
+        <div class="result-level-badge ${lv.bgCls}" style="border-color:${lv.color};color:${lv.color};display:inline-flex;">
+          <span style="width:6px;height:6px;border-radius:50%;background:${lv.color};display:block;"></span>
+          Nível ${lv.num} — ${lv.name}
+        </div>
+        <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:12px;">${lv.headline}</h2>
+        <p style="color:var(--muted);font-size:0.95rem;line-height:1.75;max-width:580px;margin:0 auto;">${lv.desc}</p>
+      </div>
+
+      <div class="result-card" style="border-color:rgba(255,255,255,0.08);">
+        <div class="result-card-header" style="background:rgba(255,255,255,0.02);">
+          <div class="result-level-tag" style="color:${lv.color};">
+            <span style="width:18px;height:1px;background:${lv.color};display:block;"></span>
+            ${lv.tagline}
+          </div>
+          <div class="result-big-num" style="color:${lv.color};">${lv.num}</div>
+          <div style="height:3px;position:absolute;top:0;left:0;right:0;background:${lv.color};"></div>
+        </div>
+        <div class="result-traits-wrap">
+          <div class="result-traits-title">Perfil identificado</div>
+          <div class="result-traits">
+            ${lv.traits.map(t => `<div class="result-trait"><div class="result-dot" style="background:${lv.color};"></div><span>${t}</span></div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <div class="result-services-section">
+        <div class="result-services-label">Serviços disponíveis para você</div>
+        <div class="result-services-grid">
+          ${lv.services.map(s => `
+            <div class="result-service ${s.available ? 'available' : 'locked'}" style="${s.available ? `--svc-color:${lv.color}` : ''}">
+              ${s.available ? `<div style="position:absolute;top:0;left:0;right:0;height:1px;background:${lv.color};"></div>` : ''}
+              <div class="rs-status" style="${s.available ? `color:${lv.color};` : ''}">
+                <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${s.available ? lv.color : 'var(--muted)'};"></span>
+                ${s.available ? 'Disponível' : 'Bloqueado'}
+              </div>
+              <div class="rs-name">${s.name}</div>
+              <div class="rs-why">${s.why}</div>
+              ${!s.available && s.lock ? `<div style="font-size:0.72rem;color:var(--muted);margin-top:8px;font-style:italic;">${s.lock}</div>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="result-note" style="border-color:rgba(255,255,255,0.08);">
+        <div class="result-note-icon" style="border-color:${lv.color};color:${lv.color};">${lv.noteIcon}</div>
+        <div>
+          <div class="result-note-label" style="color:${lv.color};">${lv.noteLabel}</div>
+          <div class="result-note-text">${lv.note}</div>
+        </div>
+      </div>
+
+      <div class="result-cta">
+        <h3>Quer um plano personalizado?</h3>
+        <p>Você está no Nível ${lv.num} — ${lv.name}. Vamos montar juntos a estratégia certa para levar seu negócio ao próximo nível.</p>
+        <div class="result-cta-btns">
+          <a href="https://wa.me/5528999959784?text=Olá!%20Fiz%20o%20quiz%20da%20Evastek%20e%20estou%20no%20Nível%20${lv.num}%20—%20${encodeURIComponent(lv.name)}.%20Gostaria%20de%20saber%20mais!" target="_blank" class="btn-primary">Falar com a Evastek</a>
+          <button class="result-restart" onclick="restartQuiz()">Refazer o Quiz</button>
+        </div>
+      </div>
+    `;
+    result.classList.add('visible');
+    result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function restartQuiz() {
+    currentQ = 0;
+    answers = new Array(QUESTIONS.length).fill(null);
+    selectedOpt = null;
+    document.getElementById('quiz-result').classList.remove('visible');
+    document.getElementById('quiz-result').innerHTML = '';
+    document.getElementById('quiz-progress-wrap').style.display = '';
+    document.getElementById('quiz-card').style.display = '';
+    renderQuestion();
+    document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Init quiz
+  renderQuestion();
+  </script>
+</body>
+</html>
